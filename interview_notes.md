@@ -14,3 +14,10 @@ Phase 2 – Databricks Fundamentals
 - Used widgets for notebook parameterization
 
 
+Phase 3 – ADLS Security
+
+- Implemented OAuth-based authentication between Azure Databricks and ADLS Gen2
+- Used Azure AD Service Principal with RBAC (Storage Blob Data Contributor)
+- Managed credentials using Databricks-backed secret scopes (Standard tier)
+- Avoided storage account keys and hardcoded secrets
+- Validated read and write access from Databricks
