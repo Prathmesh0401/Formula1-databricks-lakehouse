@@ -51,6 +51,7 @@ gold_path = "abfss://presentation@stformula1dlake.dfs.core.windows.net/gold/driv
     driver_standing_df
     .write
     .mode("overwrite")
+    .partitionBy("race_year")
     .parquet(gold_path)
 )
 
