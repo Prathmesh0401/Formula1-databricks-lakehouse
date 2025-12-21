@@ -52,3 +52,23 @@ Phase 5 – Formula1 Data Ingestion (Bronze Layer)
   – No mounts  
   – Direct ABFSS access to ADLS Gen2  
 
+
+Phase 6 – Silver Layer Transformation
+
+• Designed Silver layer as a trusted contract layer to standardize and cleanse raw Bronze data
+• Applied explicit schemas, data type normalization, and column standardization across all datasets
+• Built conformed dimension tables (circuits, races, drivers, constructors) to support analytics
+• Prepared clean, deduplicated fact data from race results for downstream processing
+• Created a consolidated race_results dataset by joining facts and dimensions to reduce repeated joins
+• Enforced data quality by removing duplicates and retaining only complete, valid records
+• Preserved detailed, non-aggregated data in Silver while deferring business aggregations to Gold
+
+Phase 6 – Silver Layer Transformation
+
+• Designed Silver layer as a trusted contract layer to standardize and cleanse raw Bronze data
+• Applied explicit schemas, data type normalization, and column standardization across all datasets
+• Built conformed dimension tables (circuits, races, drivers, constructors) to support analytics
+• Prepared clean, deduplicated fact data from race results for downstream processing
+• Created a consolidated race_results dataset by joining facts and dimensions to reduce repeated joins
+• Enforced data quality by removing duplicates and retaining only complete, valid records
+• Preserved detailed, non-aggregated data in Silver while deferring business aggregations to Gold
