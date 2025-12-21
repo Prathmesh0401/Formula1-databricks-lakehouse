@@ -28,9 +28,9 @@ gold_path = "abfss://presentation@stformula1dlake.dfs.core.windows.net/gold/calc
     calculated_race_results_df
     .write
     .mode("overwrite")
+    .partitionBy("race_year")
     .parquet(gold_path)
 )
-
 
 # COMMAND ----------
 
