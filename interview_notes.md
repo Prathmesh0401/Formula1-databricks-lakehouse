@@ -63,12 +63,19 @@ Phase 6 – Silver Layer Transformation
 • Enforced data quality by removing duplicates and retaining only complete, valid records
 • Preserved detailed, non-aggregated data in Silver while deferring business aggregations to Gold
 
-Phase 6 – Silver Layer Transformation
+Phase 7 – Gold Layer Analytics
 
-• Designed Silver layer as a trusted contract layer to standardize and cleanse raw Bronze data
-• Applied explicit schemas, data type normalization, and column standardization across all datasets
-• Built conformed dimension tables (circuits, races, drivers, constructors) to support analytics
-• Prepared clean, deduplicated fact data from race results for downstream processing
-• Created a consolidated race_results dataset by joining facts and dimensions to reduce repeated joins
-• Enforced data quality by removing duplicates and retaining only complete, valid records
-• Preserved detailed, non-aggregated data in Silver while deferring business aggregations to Gold
+• Designed Gold datasets with business-ready metrics for BI consumption  
+• Built calculated_race_results to centralize business logic (wins, podiums)  
+• Created ranked driver_standing and constructor_standing using window functions  
+• Used partitioned Delta tables for scalability and performance  
+• Designed pipelines to be incremental, idempotent, and automation-ready  
+• Optimized analytics by shifting heavy computations out of BI tools  
+
+
+Phase 8 – Delta Migration (Gold Layer)
+
+• Safely converted Hive-partitioned Gold Parquet datasets to Delta using CONVERT TO DELTA with explicit partition schema  
+• Preserved existing data and partitioning during migration  
+• Enabled ACID transactions, time travel, and MERGE-based updates on Gold tables  
+• Validated Delta conversion using DESCRIBE DETAIL and Delta reads  
