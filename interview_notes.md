@@ -88,3 +88,13 @@ Phase 9 – BI & Analytics Presentation
 • Prevented metric distortion by enforcing SQL-defined aggregation  
 • Optimized trend charts by limiting series to top performers  
 • Applied professional dashboard design principles for clarity and usability  
+
+Phase 10 – Workflow Orchestration
+
+• Built an end-to-end Databricks Workflow for Bronze → Silver → Gold pipelines  
+• Used job-level parameters to enable incremental and repeatable executions  
+• Enforced task dependencies to guarantee data correctness  
+• Used job clusters with autoscaling and auto-termination for cost efficiency  
+• Configured retries and failure handling for production resilience  
+• Configured alerting on failed and success of jobs over email.
+
