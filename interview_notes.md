@@ -79,3 +79,12 @@ Phase 8 – Delta Migration (Gold Layer)
 • Preserved existing data and partitioning during migration  
 • Enabled ACID transactions, time travel, and MERGE-based updates on Gold tables  
 • Validated Delta conversion using DESCRIBE DETAIL and Delta reads  
+
+Phase 9 – BI & Analytics Presentation
+
+• Built an interactive Databricks SQL dashboard using Delta Gold tables  
+• Designed season-wise analytics with consistent global filtering  
+• Combined tables, bar charts, and trend visuals for layered insights  
+• Prevented metric distortion by enforcing SQL-defined aggregation  
+• Optimized trend charts by limiting series to top performers  
+• Applied professional dashboard design principles for clarity and usability  
