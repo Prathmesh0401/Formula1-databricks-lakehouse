@@ -11,6 +11,12 @@
 		"ls_ad_f1_properties_typeProperties_existingClusterId": {
 			"value": "1216-080236-r9lzzt0b"
 		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date": {
+			"value": "2020-01-01"
+		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year": {
+			"value": "2019"
+		},
 		"containerUri": {
 			"value": ""
 		},

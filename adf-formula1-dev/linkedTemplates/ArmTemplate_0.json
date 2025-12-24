@@ -14,6 +14,14 @@
 		"ls_ad_f1_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "1216-080236-r9lzzt0b"
+		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date": {
+			"type": "string",
+			"defaultValue": "2020-01-01"
+		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year": {
+			"type": "string",
+			"defaultValue": "2019"
 		}
 	},
 	"variables": {
@@ -310,6 +318,40 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_ad_f1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tr_f1_workflow')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pl_formula1_end_to_end",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"p_file_date": "[parameters('tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date')]",
+							"race_year": "[parameters('tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15,
+						"startTime": "2025-12-23T07:00:00",
+						"endTime": "2025-12-23T07:07:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pl_formula1_end_to_end')]"
 			]
 		}
 	]

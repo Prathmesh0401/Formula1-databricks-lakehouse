@@ -15,6 +15,14 @@
 			"type": "string",
 			"defaultValue": "1216-080236-r9lzzt0b"
 		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date": {
+			"type": "string",
+			"defaultValue": "2020-01-01"
+		},
+		"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year": {
+			"type": "string",
+			"defaultValue": "2019"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -47,6 +55,12 @@
 					},
 					"ls_ad_f1_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('ls_ad_f1_properties_typeProperties_existingClusterId')]"
+					},
+					"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date": {
+						"value": "[parameters('tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_p_file_date')]"
+					},
+					"tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year": {
+						"value": "[parameters('tr_f1_workflow_properties_pl_formula1_end_to_end_parameters_race_year')]"
 					}
 				}
 			},
