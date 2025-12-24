@@ -1,0 +1,316 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-formula1-dev"
+		},
+		"ls_ad_f1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_ad_f1'"
+		},
+		"ls_ad_f1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1216-080236-r9lzzt0b"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_formula1_end_to_end')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "On_Success_Notify",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Gold_aggregation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"content_type": "application/json"
+							},
+							"url": "https://prod-26.centralindia.logic.azure.com:443/workflows/2210ea928a3d4799afb6dc4795438c48/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=i9gY8ofdBmHQmLTs8aozVo28Q1XQ2aUbYVklmoi7RoE",
+							"body": {
+								"status": "SUCCESS",
+								"pipeline_name": "@pipeline().Pipeline",
+								"activity_name": "gold_aggregations",
+								"error_message": "",
+								"file_date": "@pipeline().parameters.p_file_date",
+								"run_id": "@pipeline().RunId",
+								"timestamp": "@utcNow()"
+							}
+						}
+					},
+					{
+						"name": "Bronze_Ingestion",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Workspace/Users/prathmeshpatange01_gmail.com#ext#@prathmeshpatange01gmail.onmicrosoft.com/Formula1-databricks/Ingestion/Ingest_all",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@pipeline().parameters.p_file_date",
+									"type": "Expression"
+								},
+								"race_year": {
+									"value": "@pipeline().parameters.race_year",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_ad_f1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Silver_Transformation",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Bronze_Ingestion",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Workspace/Users/prathmeshpatange01_gmail.com#ext#@prathmeshpatange01gmail.onmicrosoft.com/Formula1-databricks/Transformation/transform_all",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@pipeline().parameters.p_file_date",
+									"type": "Expression"
+								},
+								"race_year": {
+									"value": "@pipeline().parameters.race_year",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_ad_f1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Gold_aggregation",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Silver_Transformation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Workspace/Users/prathmeshpatange01_gmail.com#ext#@prathmeshpatange01gmail.onmicrosoft.com/Formula1-databricks/Analysis/Analyse_all",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@pipeline().parameters.p_file_date",
+									"type": "Expression"
+								},
+								"race_year": {
+									"value": "@pipeline().parameters.race_year",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_ad_f1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "On_Failure_Notify",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Bronze_Ingestion",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"content_type": "application/json"
+							},
+							"url": "https://prod-26.centralindia.logic.azure.com:443/workflows/2210ea928a3d4799afb6dc4795438c48/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=i9gY8ofdBmHQmLTs8aozVo28Q1XQ2aUbYVklmoi7RoE",
+							"body": {
+								"status": "Failure",
+								"pipeline_name": "@pipeline().Pipeline",
+								"activity_name": "gold_aggregations",
+								"error_message": "",
+								"file_date": "@pipeline().parameters.p_file_date",
+								"run_id": "@pipeline().RunId",
+								"timestamp": "@utcNow()"
+							}
+						}
+					},
+					{
+						"name": "On_Failure_Notify_Silver",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Silver_Transformation",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"content_type": "application/json"
+							},
+							"url": "https://prod-26.centralindia.logic.azure.com:443/workflows/2210ea928a3d4799afb6dc4795438c48/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=i9gY8ofdBmHQmLTs8aozVo28Q1XQ2aUbYVklmoi7RoE",
+							"body": {
+								"status": "Failure",
+								"pipeline_name": "@pipeline().Pipeline",
+								"activity_name": "gold_aggregations",
+								"error_message": "",
+								"file_date": "@pipeline().parameters.p_file_date",
+								"run_id": "@pipeline().RunId",
+								"timestamp": "@utcNow()"
+							}
+						}
+					},
+					{
+						"name": "On_Failure_Notify_Gold",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Gold_aggregation",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"content_type": "application/json"
+							},
+							"url": "https://prod-26.centralindia.logic.azure.com:443/workflows/2210ea928a3d4799afb6dc4795438c48/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=i9gY8ofdBmHQmLTs8aozVo28Q1XQ2aUbYVklmoi7RoE",
+							"body": {
+								"status": "Failure",
+								"pipeline_name": "@pipeline().Pipeline",
+								"activity_name": "gold_aggregations",
+								"error_message": "",
+								"file_date": "@pipeline().parameters.p_file_date",
+								"run_id": "@pipeline().RunId",
+								"timestamp": "@utcNow()"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"p_file_date": {
+						"type": "String",
+						"defaultValue": "2020-01-01"
+					},
+					"race_year": {
+						"type": "String",
+						"defaultValue": "2019"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_ad_f1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_ad_f1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1046699569939209.9.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('ls_ad_f1_accessToken')]"
+					},
+					"existingClusterId": "[parameters('ls_ad_f1_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
