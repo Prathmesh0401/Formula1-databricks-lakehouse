@@ -173,7 +173,6 @@
 						"activity_name": "gold_aggregations",
 						"error_message": "",
 						"file_date": "@pipeline().parameters.p_file_date",
-						"environment": "@pipeline().parameters.env",
 						"run_id": "@pipeline().RunId",
 						"timestamp": "@utcNow()"
 					}
@@ -210,7 +209,6 @@
 						"activity_name": "gold_aggregations",
 						"error_message": "",
 						"file_date": "@pipeline().parameters.p_file_date",
-						"environment": "@pipeline().parameters.env",
 						"run_id": "@pipeline().RunId",
 						"timestamp": "@utcNow()"
 					}
@@ -247,7 +245,6 @@
 						"activity_name": "gold_aggregations",
 						"error_message": "",
 						"file_date": "@pipeline().parameters.p_file_date",
-						"environment": "@pipeline().parameters.env",
 						"run_id": "@pipeline().RunId",
 						"timestamp": "@utcNow()"
 					}
