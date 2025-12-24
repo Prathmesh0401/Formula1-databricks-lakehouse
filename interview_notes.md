@@ -98,3 +98,23 @@ Phase 10 – Workflow Orchestration
 • Configured retries and failure handling for production resilience  
 • Configured alerting on failed and success of jobs over email.
 
+
+Phase 11 – Enterprise Orchestration & Alerting (ADF + Logic Apps)
+
+• Designed an enterprise-grade orchestration layer using Azure Data Factory to control Databricks pipelines
+• Implemented parameterized ADF pipelines to orchestrate Bronze → Silver → Gold Databricks notebooks
+• Enforced strict success-based dependencies to prevent downstream execution on upstream failures
+• Built centralized failure handling to capture and react to any notebook-level failure
+• Implemented success notifications triggered only after full pipeline completion
+• Integrated ADF with Azure Logic Apps via HTTP Web Activities for decoupled alerting
+• Designed Logic App workflows to branch dynamically on SUCCESS vs FAILURE events
+• Delivered automated email notifications with pipeline name, run ID, environment, file date, and error context
+• Applied production-grade retry and timeout policies to balance resiliency and cost
+• Followed separation of concerns:
+
+ADF for orchestration
+
+Databricks for transformation
+
+Logic Apps for communication
+
