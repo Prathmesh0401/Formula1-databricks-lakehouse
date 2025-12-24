@@ -1,0 +1,29 @@
+{
+	"name": "tr_f1_workflow",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_formula1_end_to_end",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"p_file_date": "2020-01-01",
+					"race_year": "2019"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2025-12-23T07:00:00",
+				"endTime": "2025-12-23T07:07:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
