@@ -118,3 +118,13 @@ Databricks for transformation
 
 Logic Apps for communication
 
+
+Phase 12.3 – Security & Secrets Management
+
+• Implemented centralized secrets management using Azure Key Vault  
+• Secured Databricks access to ADLS using OAuth-based authentication  
+• Eliminated secrets from code, pipelines, and Git repositories  
+• Applied identity-based access using Managed Identity and RBAC  
+• Enforced least-privilege permissions across ADF, Databricks, and ADLS  
+
+
