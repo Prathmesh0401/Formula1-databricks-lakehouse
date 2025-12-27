@@ -30,13 +30,13 @@ This repository demonstrates how a real-world analytics platform is **designed, 
 **High-Level Flow**
 
 Data Sources
-   ↓
+↓
 Azure Data Factory (Control Plane)
-   ↓
+↓
 Azure Databricks (Compute Plane)
-   ↓
+↓
 Azure Data Lake Gen2 (Delta Lake Storage)
-   ↓
+↓
 Analytics & Dashboards
 
 ### Architecture
@@ -74,17 +74,17 @@ Analytics & Dashboards
 
 formula1-databricks-lakehouse/
 │
-├── architecture/           # Enterprise architecture diagrams
+├── architecture/ # Enterprise architecture diagrams
 │
 ├── notebooks/
-│   ├── bronze/             # Raw ingestion pipelines
-│   ├── silver/             # Data cleansing & conformance
-│   ├── gold/               # Analytics & aggregations
-│   └── includes/           # Shared utilities & configs
+│ ├── bronze/ # Raw ingestion pipelines
+│ ├── silver/ # Data cleansing & conformance
+│ ├── gold/ # Analytics & aggregations
+│ └── includes/ # Shared utilities & configs
 │
-├── adf/                    # ADF pipeline design & logic
-├── dashboards/             # BI dashboard snapshots
-├── interview.md            # Phase-wise interview deep dives
+├── adf/ # ADF pipeline design & logic
+├── dashboards/ # BI dashboard snapshots
+├── interview.md # Phase-wise interview deep dives
 └── README.md
 
 
