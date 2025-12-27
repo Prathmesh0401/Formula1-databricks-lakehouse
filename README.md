@@ -1,3 +1,12 @@
+![Azure](https://img.shields.io/badge/Cloud-Azure-blue?logo=microsoftazure)
+![Databricks](https://img.shields.io/badge/Compute-Databricks-red?logo=databricks)
+![Delta Lake](https://img.shields.io/badge/Storage-Delta%20Lake-0A9EDC)
+![ADF](https://img.shields.io/badge/Orchestration-Azure%20Data%20Factory-blue)
+![Lakehouse](https://img.shields.io/badge/Architecture-Lakehouse-success)
+![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)
+
+
+
 # 🏎️ Formula 1 Lakehouse Platform on Azure Databricks
 
 A **production-grade, end-to-end data engineering platform** built on **Azure Databricks** and **Azure Data Factory**, implementing a **modern Lakehouse architecture** with **Delta Lake**, **Bronze–Silver–Gold layering**, **enterprise orchestration**, and **operational observability**.
@@ -30,6 +39,9 @@ Azure Data Lake Gen2 (Delta Lake Storage)
    ↓
 Analytics & Dashboards
 
+### Architecture
+
+![Architecture](architecture/formula1-architecture.png)
 
 
 **Key Architectural Principles**
