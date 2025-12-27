@@ -127,4 +127,13 @@ Phase 12.3 – Security & Secrets Management
 • Applied identity-based access using Managed Identity and RBAC  
 • Enforced least-privilege permissions across ADF, Databricks, and ADLS  
 
+Phase 13 – Platform Governance & Maturity (Standard Tier)
+
+• Implemented enterprise-grade governance using hive_metastore due to Standard tier constraints  
+• Enforced data access control at ADLS container level using RBAC and Service Principals  
+• Secured secrets using Azure Key Vault and eliminated credentials from code  
+• Used Delta Lake features (MERGE, history, time travel) to guarantee data correctness and recoverability  
+• Maintained strict Bronze/Silver/Gold separation to simulate catalog-level governance  
+• Documented data lineage explicitly to compensate for missing Unity Catalog lineage  
+• Designed the platform to be Unity Catalog–ready with minimal future migration effort  
 
